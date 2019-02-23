@@ -1,0 +1,339 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Match Scouting</title>
+
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- Set Up Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBC1vbaGmjCzu6MeXHOX0EMxp8jjfccRYg",
+            authDomain: "matchscouting.firebaseapp.com",
+            databaseURL: "https://matchscouting.firebaseio.com",
+            projectId: "matchscouting",
+            storageBucket: "matchscouting.appspot.com",
+            messagingSenderId: "935442403118"
+        };
+        firebase.initializeApp(config);
+         const app = firebase.app();
+            var db = firebase.firestore();
+    </script>
+
+    <!-- Set Up Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+
+    <!-- Set Up Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+
+    <!-- Set Up Font Awesome and Google Fonts-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
+
+    <!-- Set Up Program Files-->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src = "javascript/InputData.js"></script>
+    <script src = "javascript/MatchData.js"></script>
+    <script src = "javascript/BlueAlliance.js"></script>
+    <script src="javascript/RecordData.js"></script>
+    <script src="javascript/User.js"></script>
+</head>
+
+<body style="background-color: aliceblue">
+    <div style="background-color: #00C851" class="sticky-top rounded pt-3 container border-bottom nav-scroller">
+        <nav class="nav row ">
+            <div class="col-md-11 row">
+                <h4 class="pl-3">Electric Mayhem: Match Scouting</h4>
+                <img class="pl-3" src="logo.png" height="30">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="index.html">Scout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="anaylze.html">Anaylze</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="list.html">My List</a>
+                </li>
+            </div>
+            <div class="col-md-1 flex justify-content-end pb-3">
+                <button id="signIn" class="btn btn-light"><a href="signIn.html">Sign In</a></button>
+            </div>
+        </nav>
+    </div>
+    <div class="container pt-5">
+        <div class="blackOps">
+            <div class="pb-3 width-50">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Team Number</span>
+                    </div>
+                    <input id="teamNum" type="text" class="form-control">
+                    <button id="teamNumButton" class="btn btn-outline-secondary">Enter</button>
+                    <div id="invalid" class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="hidden pb-3 width-50">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label>Event</label>
+                        <select id="event">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden pb-3 width-50">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label>Match</label>
+                        <select style="height: 2em" id="match">
+                        </select>
+                        <p style="font-size: 14px" class="">*Displays Only Matches You have not scouted yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="form" class="hidden">
+            <h1 class="blackOps text-center"> Auto</h1>
+            <div class="row text-center border d-flex justify-content-between">
+                <div class = "col-md-5">
+                    <div class="field pt-3 input-group mb-3">
+                        <h4>Hatch Placed</h4>
+                        <div class="pl-3 input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">-</button>
+                        </div>
+                        <input id="autoHatch" readonly="readonly" value="0" data-record = "4" class="form-control record">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="field pt-3 input-group mb-3">
+                        <h4>Cargo Placed</h4>
+                        <div class="pl-3 input-group-prepend" >
+                            <button class="btn btn-outline-secondary" type="button">-</button>
+                        </div>
+                        <input id="autoCargo" readonly="readonly" value="0" data-record = "3" class="form-control record">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="pt-3">
+                        <div class="input-group mb-3 border rounded">
+                            <div class="input-group-text">
+                                <input class="record" id="level2Start" data-record = "5" type="checkbox">
+                            </div>
+                            <h4 class="pl-3 pt-1">Starts on Level 2</h4>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <div class="input-group mb-3 border rounded">
+                            <div class="input-group-text">
+                                <input class="record" id="cameraAuto"  data-record = "6" type="checkbox" a>
+                            </div>
+                            <h4 class="pl-3 pt-1">Uses Camera</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class = "col-md-3">
+                    <div class="pt-3">
+                        <div class="input-group mb-3 border rounded">
+                            <div class="input-group-text">
+                                <input class = "record" id="autoLine" data-record = "1"type="checkbox">
+                            </div>
+                            <h4 class="pl-3 pt-1">Line Crossed</h4>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <div class="input-group mb-3 border rounded">
+                            <div class="input-group-text">
+                                <input class = "record" id="deadAuto" data-record = "2" type="checkbox" a>
+                            </div>
+                            <h4 class="pl-3 pt-1">Dead</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="blackOps mt-5 text-center">Teleop</h1>
+            <div class="text-center">  
+                <div class = "row mt-3 d-flex justify-content-between">
+                    <div class = "col-md-5 mt-3">
+                        <h2 class="blackOps">Hatches Placed</h2>
+                        <div class="field pt-3 input-group mb-3">
+                            <h4>Top</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="topHatch" readonly="readonly" value="0" data-record = "16" class=" record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="field pt-3 input-group mb-3">
+                            <h4>Middle</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="midHatch" readonly="readonly" value="0" data-record = "15" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="field pt-3 input-group mb-3">
+                            <h4>Bottom</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="bottomHatch" readonly="readonly" value="0" data-record = "14" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "col-md-5 mt-3">
+                        <h2 class="blackOps">Cargo Placed</h2>
+                        <div class="field pt-3 input-group mb-3">
+                            <h4>Top</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="topCargo" readonly="readonly" value="0" data-record = "13" class="record form-control">
+                            <div class="input-group-append"> 
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="field pt-3 input-group mb-3">
+                            <h4>Middle</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="midCargo" readonly="readonly" value="0" data-record = "12" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="field pt-3 input-group mb-3">
+                            <h4>Bottom</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="bottomCargo" readonly="readonly" value="0" data-record = "11" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-5 row justify-content-between">
+                    <div class="col-md mb-3 rounded">
+                        <h4>Hatch Pickup From Ground</h4>
+                        <div class="field pt-3 input-group">
+                
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="groundHatch" readonly="readonly" value="0" data-record="9" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md  mb-3 rounded">
+                        <h4>Hatch Pickup From Human</h4>
+                        <div class="field pt-3 input-group mb-3">
+                           
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="humanHatch" readonly="readonly" value="0" data-record="10" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md mb-3 rounded pt-5">
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="climbLevel"><b>Climb Level</b></label>
+                            </div>
+                            <select class="custom-select text-center record" data-record = "7" id="climbLevel">
+                                <b>
+                                    <option> 1 </option>
+                                    <option> 2 </option>
+                                    <option> 3 </option>
+                                </b>
+                            </select>
+                    
+                        </div>
+                    </div>
+                </div>      
+                <div class="row">
+                    <div class="pt-3 col-md-6">
+                        <div class="input-group mb-3 border rounded">
+                            <div class="input-group-text">
+                                <input id="tipped" type="checkbox" class = "record" data-record = "17">
+                            </div>
+                            <h4 class="pl-3 pt-1">Tipped Over</h4>
+                        </div>
+                    </div>
+                    <div class="pt-3 col-md-6">
+                        <div class="input-group mb-3 border rounded">
+                            <div class="input-group-text">
+                                <input id="dead" type="checkbox" class = "record" data-record = "8">
+                            </div>
+                            <h4 class="pl-3 pt-1">Dead</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-5  container-fluid">
+                <button data-toggle="modal" data-target="#submitModal" style="float: right" type="button" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Modal -->
+    <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Submit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to submit? You can not changes these values after submiting.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+                    <button id="submit" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <hr class="w-75 my-0">
+        <p class="text-center py-5">© 2018-2019 Nichols Electric Mayhem. All Rights Reserved.</p>
+    </div>
+</body>
+
+</html>
