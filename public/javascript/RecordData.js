@@ -6,9 +6,8 @@ document.addEventListener("DOMContentLoaded", event =>{
   $("#submit").on("click", async function(){
     console.log("submit clicked");
     var newData = record();
-    // var updatedData = await getCurrentData(newData); 
-    // updateFirebase(updatedData);
-    getUserPersonalData(newData);
+    var updatedData = await getCurrentData(newData); 
+    updateFirebase(updatedData);
   });
   
 });

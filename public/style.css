@@ -1,11 +1,26 @@
 .blackOps {
-    font-family: 'Black Ops One', cursive;
+    font-family: 'Times New Roman', Times, serif
 }
 
 .hidden {
-    visibility: hidden; 
+  /*  visibility: hidden; */
 }
 
 .disappear {
     display: none;
+}
+@media screen and (max-width: 540px) {
+    h4 {
+        font-size: 16px;
+    }
+}
+
+table {
+	display: table;
+}
+table tr {
+	display: table-cell;
+}
+table tr td {
+	display: block;
 }

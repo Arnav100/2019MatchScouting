@@ -12,11 +12,19 @@ function makeEmptyMatchData()
         auto: {
          
             //Int
-            placedHatch: {
+            hatchShip: {
                 values: [],
                 frequency: [],
             },
-            placedCargo: {
+            cargoShip: {
+                values: [],
+                frequency: [],
+            },
+            hatchRocket: {
+                values: [],
+                frequency: [],
+            },
+            cargoRocket: {
                 values: [],
                 frequency: [],
             },
@@ -41,7 +49,11 @@ function makeEmptyMatchData()
         },
 
         teleop: {
-            placedHatch: {
+            hatchShip: {
+                values: [],
+                frequency: [],
+            },
+            hatchRocket: {
                 top: {
                     values: [],
                     frequency: [],
@@ -55,7 +67,11 @@ function makeEmptyMatchData()
                     frequency: [],
                 }
             },
-            placedCargo: {
+            cargoShip: {
+                values: [],
+                frequency: [],
+            },
+            cargoRocket: {
                 top: {
                     values: [],
                     frequency: [],
@@ -187,11 +203,11 @@ class Record
         if (this.frequency[i] > max) {
             maxIndex = i;
             max = this.frequency[i];
+            }
         }
-    }
     return maxIndex;
 
-}
+    }
 
 }
 

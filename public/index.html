@@ -46,7 +46,7 @@
     <link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
 
     <!-- Set Up Program Files-->
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href = "style.css"/>
     <script src = "javascript/InputData.js"></script>
     <script src = "javascript/MatchData.js"></script>
     <script src = "javascript/BlueAlliance.js"></script>
@@ -68,6 +68,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="list.html">My List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="docs.html">Google Sheets</a>
                 </li>
             </div>
             <div class="col-md-1 flex justify-content-end pb-3">
@@ -113,21 +116,43 @@
             <div class="row text-center border d-flex justify-content-between">
                 <div class = "col-md-5">
                     <div class="field pt-3 input-group mb-3">
-                        <h4>Hatch Placed</h4>
+                        <h4>Hatch On CargoShip</h4>
                         <div class="pl-3 input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button">-</button>
                         </div>
-                        <input id="autoHatch" readonly="readonly" value="0" data-record = "4" class="form-control record">
+                        <input id="autoHatchShip" readonly="readonly" value="0" data-record = "6" class="form-control record">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button">+</button>
                         </div>
                     </div>
                     <div class="field pt-3 input-group mb-3">
-                        <h4>Cargo Placed</h4>
-                        <div class="pl-3 input-group-prepend" >
+                        <h4>Hatch On Rocket</h4>
+                        <div class="pl-3 input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button">-</button>
                         </div>
-                        <input id="autoCargo" readonly="readonly" value="0" data-record = "3" class="form-control record">
+                        <input id="autoHatchRocket" readonly="readonly" value="0" data-record="5" class="form-control record">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class = "col-md-5">
+                    <div class="field pt-3 input-group mb-3">
+                        <h4>Cargo On CargoShip</h4>
+                        <div class="pl-3 input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">-</button>
+                        </div>
+                        <input id="autoCargoShip" readonly="readonly" value="0" data-record="2" class="form-control record">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="field pt-3 input-group mb-3">
+                        <h4>Cargo On RocketShip</h4>
+                        <div class="pl-3 input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">-</button>
+                        </div>
+                        <input id="autoCargoRocket" readonly="readonly" value="0" data-record="1" class="form-control record">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button">+</button>
                         </div>
@@ -137,7 +162,7 @@
                     <div class="pt-3">
                         <div class="input-group mb-3 border rounded">
                             <div class="input-group-text">
-                                <input class="record" id="level2Start" data-record = "5" type="checkbox">
+                                <input class="record" id="level2Start" data-record = "7" type="checkbox">
                             </div>
                             <h4 class="pl-3 pt-1">Starts on Level 2</h4>
                         </div>
@@ -145,7 +170,7 @@
                     <div class="pt-3">
                         <div class="input-group mb-3 border rounded">
                             <div class="input-group-text">
-                                <input class="record" id="cameraAuto"  data-record = "6" type="checkbox" a>
+                                <input class="record" id="cameraAuto"  data-record = "8" type="checkbox" a>
                             </div>
                             <h4 class="pl-3 pt-1">Uses Camera</h4>
                         </div>
@@ -155,7 +180,7 @@
                     <div class="pt-3">
                         <div class="input-group mb-3 border rounded">
                             <div class="input-group-text">
-                                <input class = "record" id="autoLine" data-record = "1"type="checkbox">
+                                <input class = "record" id="autoLine" data-record = "3"type="checkbox">
                             </div>
                             <h4 class="pl-3 pt-1">Line Crossed</h4>
                         </div>
@@ -163,7 +188,7 @@
                     <div class="pt-3">
                         <div class="input-group mb-3 border rounded">
                             <div class="input-group-text">
-                                <input class = "record" id="deadAuto" data-record = "2" type="checkbox" a>
+                                <input class = "record" id="deadAuto" data-record = "4" type="checkbox" a>
                             </div>
                             <h4 class="pl-3 pt-1">Dead</h4>
                         </div>
@@ -176,11 +201,21 @@
                     <div class = "col-md-5 mt-3">
                         <h2 class="blackOps">Hatches Placed</h2>
                         <div class="field pt-3 input-group mb-3">
+                            <h4>On CargoShip</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="hatchShip" readonly="readonly" value="0" data-record="19" class=" record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="field pt-3 input-group mb-3">
                             <h4>Top</h4>
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="topHatch" readonly="readonly" value="0" data-record = "16" class=" record form-control">
+                            <input id="topHatch" readonly="readonly" value="0" data-record = "18" class=" record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -190,7 +225,7 @@
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="midHatch" readonly="readonly" value="0" data-record = "15" class="record form-control">
+                            <input id="midHatch" readonly="readonly" value="0" data-record = "17" class="record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -200,7 +235,7 @@
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="bottomHatch" readonly="readonly" value="0" data-record = "14" class="record form-control">
+                            <input id="bottomHatch" readonly="readonly" value="0" data-record = "16" class="record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -209,11 +244,21 @@
                     <div class = "col-md-5 mt-3">
                         <h2 class="blackOps">Cargo Placed</h2>
                         <div class="field pt-3 input-group mb-3">
+                            <h4>On CargoShip</h4>
+                            <div class="pl-3 input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                            </div>
+                            <input id="cargoShip" readonly="readonly" value="0" data-record="12" class="record form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="field pt-3 input-group mb-3">
                             <h4>Top</h4>
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="topCargo" readonly="readonly" value="0" data-record = "13" class="record form-control">
+                            <input id="topCargo" readonly="readonly" value="0" data-record = "11" class="record form-control">
                             <div class="input-group-append"> 
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -223,7 +268,7 @@
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="midCargo" readonly="readonly" value="0" data-record = "12" class="record form-control">
+                            <input id="midCargo" readonly="readonly" value="0" data-record = "10" class="record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -233,7 +278,7 @@
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="bottomCargo" readonly="readonly" value="0" data-record = "11" class="record form-control">
+                            <input id="bottomCargo" readonly="readonly" value="0" data-record = "9" class="record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -249,7 +294,7 @@
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="groundHatch" readonly="readonly" value="0" data-record="9" class="record form-control">
+                            <input id="groundHatch" readonly="readonly" value="0" data-record="15" class="record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
@@ -262,18 +307,31 @@
                             <div class="pl-3 input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
                             </div>
-                            <input id="humanHatch" readonly="readonly" value="0" data-record="10" class="record form-control">
+                            <input id="humanHatch" readonly="readonly" value="0" data-record="20" class="record form-control">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">+</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md mb-3 rounded pt-5">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="climbLevel"><b>Attempted Climb Level</b></label>
+                            </div>
+                            <select class="custom-select text-center record" data-record="" id="attempt">
+                                <b>
+                                    <option> 1 </option>
+                                    <option> 2 </option>
+                                    <option> 3 </option>
+                                </b>
+                            </select>
+                        
+                        </div>
                         <div class="input-group ">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="climbLevel"><b>Climb Level</b></label>
                             </div>
-                            <select class="custom-select text-center record" data-record = "7" id="climbLevel">
+                            <select class="custom-select text-center record" data-record = "13" id="climbLevel">
                                 <b>
                                     <option> 1 </option>
                                     <option> 2 </option>
@@ -288,7 +346,7 @@
                     <div class="pt-3 col-md-6">
                         <div class="input-group mb-3 border rounded">
                             <div class="input-group-text">
-                                <input id="tipped" type="checkbox" class = "record" data-record = "17">
+                                <input id="tipped" type="checkbox" class = "record" data-record = "21">
                             </div>
                             <h4 class="pl-3 pt-1">Tipped Over</h4>
                         </div>
@@ -296,7 +354,7 @@
                     <div class="pt-3 col-md-6">
                         <div class="input-group mb-3 border rounded">
                             <div class="input-group-text">
-                                <input id="dead" type="checkbox" class = "record" data-record = "8">
+                                <input id="dead" type="checkbox" class = "record" data-record = "14">
                             </div>
                             <h4 class="pl-3 pt-1">Dead</h4>
                         </div>

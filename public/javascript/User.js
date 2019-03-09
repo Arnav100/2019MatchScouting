@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", event => {
         console.log("clicked!");
         $("#signInForm").addClass("disappear");
         $("#signUp").removeClass("disappear");
-    })
+    });
     $("#switchToSignIn").on("click", function () {
         console.log("clicked!");
         $("#signUp").addClass("disappear");
         $("#signInForm").removeClass("disappear");
-    })
+    });
     $("#makeAccount").on("click", createAccount);
     $("#signInButton").on("click", signIn);
     checkForUser();
