@@ -40,7 +40,7 @@ function resetForm()
         var val = $(this).val();
         if (val == "on")
             val = $(this).prop("checked", false);
-        else if ($(this).attr('id') == "climbLevel")
+        else if ($(this).attr('id') == "climbLevel" || $(this).attr('id') == "attempt" )
             $(this).val(1);
         else
             $(this).val(0);

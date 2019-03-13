@@ -97,6 +97,10 @@ function makeEmptyMatchData()
                 values: [],
                 frequency: [],
             },
+            zAttempt: {
+                values: [],
+                frequency: [],
+            },
             tippedOver: {
                 values: [],
                 frequency: [],

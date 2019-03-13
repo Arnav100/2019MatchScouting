@@ -1,0 +1,614 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Match Scouting</title>
+
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- Set Up Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBC1vbaGmjCzu6MeXHOX0EMxp8jjfccRYg",
+            authDomain: "matchscouting.firebaseapp.com",
+            databaseURL: "https://matchscouting.firebaseio.com",
+            projectId: "matchscouting",
+            storageBucket: "matchscouting.appspot.com",
+            messagingSenderId: "935442403118"
+        };
+        firebase.initializeApp(config);
+        const app = firebase.app();
+        var db = firebase.firestore();
+    </script>
+
+    <!-- Set Up Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+
+    <!-- Set Up Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+
+    <!-- Set Up Font Awesome and Google Fonts-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
+
+    <!-- Set Up Program Files-->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="javascript/test.js"></script>
+    <script src="javascript/NewBlueAliance.js"></script>
+    <script src="javascript/User.js"></script>
+</head>
+
+<body style="background-color: aliceblue">
+    <div style="background-color: #00C851" class="sticky-top rounded pt-3 container border-bottom nav-scroller">
+        <nav class="nav row ">
+            <div class="col-md-11 row">
+                <h4 class="pl-3">Electric Mayhem: Match Scouting</h4>
+                <img class="pl-3" src="logo.png" height="30">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="index.html">Scout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="anaylze.html">Anaylze</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="list.html">My List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="docs.html">Google Sheets</a>
+                </li>
+            </div>
+            <div class="col-md-1 flex justify-content-end pb-3">
+                <button id="signIn" class="btn btn-light"><a href="signIn.html">Sign In</a></button>
+            </div>
+        </nav>
+    </div>
+    <div class = "container">
+
+        <div class="blackOps mt-5 row justify-content-around">
+            <div class="hidden pb-3 width-50">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label>Match</label>
+                        <select style="height: 2em" id="match">
+                            <option disabled selected value> -- select an option -- </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden pb-3 width-50">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label>Team</label>
+                        <select style="height: 2em" id="team">
+                            <option disabled selected value> -- select an option -- </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-md-2">
+                <div class="card-body row ">
+                    <div class=" ml-3 form-check form-check-inline">
+                        <input class="form-check-input data" data-order= "1"type="checkbox" name="dead" id="dead">
+                        <label class="form-check-label" for="dead">Dead?</label>
+                    </div>
+                </div>
+            </div>
+            <div id = "test"class = "btn btn-secondary">
+                press
+            </div>
+        </div>
+
+        <div id = "auto">
+            <div class = "text-center  mt-5">
+                <h1>Auto</h1>
+            </div>
+            <div class = "row justify-content-around mt-5">
+                <div class = "card">
+                    <div class = "card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" type="checkbox" name="lv1" data-order= "2" id="climbLv1" >
+                            <label class="form-check-label " for="climbLv1" >Climbs Down Lv.1</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" type="checkbox" name="lv2" data-order="3" id="climbLv2">
+                            <label class="form-check-label " for="climbLv2"  >Climbs Down Lv.2</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" type="checkbox" name="falls" data-order="4" id="falls">
+                            <label class="form-check-label" for="falls">Falls Down</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class = "row justify-content-around mt-5">
+                <div class="card col-md-6">
+                    <div class="card-header">
+                        Cargo Ship
+                    </div>
+                    <div class="card-body row justify-content-around">
+                        <div class="col-md mt-3 ">
+                            <div class = "text-center">
+                                <p>Left Side</p>
+                                <div class = "row justify-content-around">
+                                    <p>Far</p>
+                                    <p>Near</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle cargo auto" data-order = "18">
+                                    
+                                </div>
+                                <div class=" circle cargo auto" data-order = "19">
+                
+                                </div>
+                                <div class=" circle cargo auto" data-order = "20">
+                
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+
+                                <div class="circle hatch auto" data-order = "10">
+                
+                                </div>
+                                <div class=" circle hatch auto" data-order = "11">
+                
+                                </div>
+                                <div class=" circle hatch auto" data-order = "12">
+                
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-md border mt-3">
+                            <div class="text-center">
+                                <p>Center</p>
+                                <div class="row justify-content-center">
+                                    <p>Left </p>
+                                    <p class = "ml-2">Right</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle cargo auto" data-order = "21">
+                
+                                </div>
+                                <div class=" circle cargo auto" data-order = "22">
+                
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle hatch auto" data-order = "13">
+                
+                                </div>
+                                <div class=" circle hatch auto" data-order = "14">
+                
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-md border mt-3">
+                            <div class="text-center">
+                                <p>Right Side</p>
+                                <div class="row justify-content-around">
+                                    <p>Near</p>
+                                    <p>Far</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle cargo auto" data-order = "23">
+                
+                                </div>
+                                <div class=" circle cargo auto" data-order = "24">
+                
+                                </div>
+                                <div class=" circle cargo auto" data-order = "25">
+                
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle hatch auto" data-order = "15">
+                
+                                </div>
+                                <div class=" circle hatch auto" data-order = "16">
+                
+                                </div>
+                                <div class=" circle hatch auto" data-order = "17">
+                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "row justify-content-around mt-5">
+                <div class = "card col-md-3">
+                    <div class = "card-header">
+                        Left Rocket
+                    </div>
+                    <div class="pt-3 row justify-content-around">
+                        <p>Near</p>
+                        <p>Far</p>
+                    </div>
+                    <div class = "card-body row justify-content-around">
+                        <div class = "mt-3 ">
+                            <div class = "circle hatch auto" data-order="3" >
+
+                            </div>
+                            <div class = "mt-3 circle hatch auto" data-order="2" >
+                            
+                            </div>
+                            <div class = "mt-3 circle hatch auto" data-order="1" >
+
+                            </div>
+                        </div>
+                        <div class="rocket border">
+                            <div class="circle cargo auto" data-order= "9">
+                        
+                            </div>
+                            <div class="mt-3 circle cargo auto" data-order="8" >
+                        
+                            </div>
+                            <div class="mt-3 circle cargo auto" data-order="7" >
+                        
+                            </div>
+                        </div>
+                        <div class="mt-3 border">
+                            <div class="circle hatch auto" data-order="6">
+                        
+                            </div>
+                            <div class="mt-3 circle hatch auto" data-order="5">
+                        
+                            </div>
+                            <div class="mt-3 circle hatch auto" data-order="4">
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-3">
+                    <div class="card-header">
+                        Right Rocket
+                    </div>
+                    <div class="pt-3 row justify-content-around">
+                        <p>Far</p>
+                        <p>Near</p>
+                    </div>
+                    <div class="card-body row justify-content-around">
+                        <div class="mt-3 ">
+                            <div class="circle hatch auto" data-order="6">
+                        
+                            </div>
+                            <div class="mt-3 circle hatch auto" data-order="5">
+                        
+                            </div>
+                            <div class="mt-3 circle hatch auto" data-order="4">
+                        
+                            </div>
+                        </div>
+                        <div class="rocket border">
+                            <div class="circle cargo auto" data-order="9">
+                        
+                            </div>
+                            <div class="mt-3 circle cargo auto" data-order="8">
+                        
+                            </div>
+                            <div class="mt-3 circle cargo auto" data-order="7">
+                        
+                            </div>
+                        </div>
+                        <div class="mt-3 border">
+                            <div class="circle hatch auto" data-order="3">
+                        
+                            </div>
+                            <div class="mt-3 circle hatch auto" data-order="2">
+                        
+                            </div>
+                            <div class="mt-3 circle hatch auto" data-order="1">
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id = "teleop">
+            <div class="text-center  mt-5">
+                <h1>Teleop</h1>
+            </div>
+            <div class="row justify-content-around mt-5">
+                <div class="card col-md-6">
+                    <div class="card-header">
+                        Cargo Ship
+                    </div>
+                    <div class="card-body row justify-content-around">
+                        <div class="col-md mt-3 ">
+                            <div class="text-center">
+                                <p>Left Side</p>
+                                <div class="row justify-content-around">
+                                    <p>Far</p>
+                                    <p>Near</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle cargo teleop" data-order="18">
+            
+                                </div>
+                                <div class=" circle cargo teleop" data-order="19">
+            
+                                </div>
+                                <div class=" circle cargo teleop" data-order="20">
+            
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+            
+                                <div class="circle hatch teleop" data-order="10">
+            
+                                </div>
+                                <div class=" circle hatch teleop" data-order="11">
+            
+                                </div>
+                                <div class=" circle hatch teleop" data-order="12">
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-md border mt-3">
+                            <div class="text-center">
+                                <p>Center</p>
+                                <div class="row justify-content-center">
+                                    <p>Left </p>
+                                    <p class="ml-2">Right</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle cargo teleop" data-order="21">
+            
+                                </div>
+                                <div class=" circle cargo teleop" data-order="22">
+            
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle hatch teleop" data-order="13">
+            
+                                </div>
+                                <div class=" circle hatch teleop" data-order="14">
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-md border mt-3">
+                            <div class="text-center">
+                                <p>Right Side</p>
+                                <div class="row justify-content-around">
+                                    <p>Near</p>
+                                    <p>Far</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle cargo teleop" data-order="23">
+            
+                                </div>
+                                <div class=" circle cargo teleop" data-order="24">
+            
+                                </div>
+                                <div class=" circle cargo teleop" data-order="25">
+            
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="circle hatch teleop" data-order="15">
+            
+                                </div>
+                                <div class=" circle hatch teleop" data-order="16">
+            
+                                </div>
+                                <div class=" circle hatch teleop" data-order="17">
+            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row justify-content-around mt-5">
+                <div class="card col-md-3">
+                    <div class="card-header">
+                        Left Rocket
+                    </div>
+                    <div class="pt-3 row justify-content-around">
+                        <p>Near</p>
+                        <p>Far</p>
+                    </div>
+                    <div class="card-body row justify-content-around">
+                        <div class="mt-3 ">
+                            <div class="circle hatch teleop" data-order="3">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="2">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="1">
+            
+                            </div>
+                        </div>
+                        <div class="rocket border">
+                            <div class="circle cargo teleop" data-order="9">
+            
+                            </div>
+                            <div class="mt-3 circle cargo teleop" data-order="8">
+            
+                            </div>
+                            <div class="mt-3 circle cargo teleop" data-order="7">
+            
+                            </div>
+                        </div>
+                        <div class="mt-3 border">
+                            <div class="circle hatch teleop" data-order="6">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="5">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="4">
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card col-md-3">
+                    <div class="card-header">
+                        Right Rocket
+                    </div>
+                    <div class="pt-3 row justify-content-around">
+                        <p>Far</p>
+                        <p>Near</p>
+                    </div>
+                    <div class="card-body row justify-content-around">
+                        <div class="mt-3 ">
+                            <div class="circle hatch teleop" data-order="6">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="5">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="4">
+            
+                            </div>
+                        </div>
+                        <div class="rocket border">
+                            <div class="circle cargo teleop" data-order="9">
+            
+                            </div>
+                            <div class="mt-3 circle cargo teleop" data-order="8">
+            
+                            </div>
+                            <div class="mt-3 circle cargo teleop" data-order="7">
+            
+                            </div>
+                        </div>
+                        <div class="mt-3 border">
+                            <div class="circle hatch teleop" data-order="3">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="2">
+            
+                            </div>
+                            <div class="mt-3 circle hatch teleop" data-order="1">
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-around mt-5">
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" data-order="5" type="checkbox"  name="failLv1" id="failLv1">
+                            <label class="form-check-label" for="failLv1">Unsucessful Lv.1</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data"  data-order= "6" type="checkbox" name="platlv1" id="platformLv1">
+                            <label class="form-check-label" for="platformLv1">Platform Lv.1</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" data-order="7" type="checkbox" name="failLv2" id="failLv2">
+                            <label class="form-check-label" for="failLv2">Unsucessful Lv.2</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" data-order="8" type="checkbox" name="platlv2" id="platformLv2">
+                            <label class="form-check-label" for="platformLv2">Platform Lv.2</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" data-order="9" type="checkbox" name="failLv3" id="failLv3">
+                            <label class="form-check-label" for="failLv3">Unsucessful Lv.3</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row ">
+                        <div class=" ml-3 form-check form-check-inline">
+                            <input class="form-check-input data" data-order="10" type="checkbox" name="platlv3" id="platformLv3">
+                            <label class="form-check-label" for="platformLv3">Platform Lv.3</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="pt-5  container-fluid">
+                <button data-toggle="modal" data-target="#submitModal" style="float: right" type="button" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+    </div>
+
+    <!-- Submit Modal -->
+    <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Submit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to submit? You can not changes these values after submiting.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+                    <button id="submit" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <hr class="w-75 my-0">
+        <p class="text-center py-5">© 2018-2019 Nichols Electric Mayhem. All Rights Reserved.</p>
+    </div>
+</body>
+
+</html>

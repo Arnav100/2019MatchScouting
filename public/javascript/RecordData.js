@@ -24,7 +24,7 @@ function record()
 {
   var dataValues = new Array(17);
   $(".record").each(function (index) {
-  //  console.log(index + ": " + $(this).val() + "  " + $(this).attr('data-record'));
+    console.log(index + ": " + $(this).val() + "  " + $(this).attr('id') + " " + $(this).attr('data-record'));
     var i = $(this).attr('data-record') -1;
     var val = $(this).val();
     if(val == "on")
